@@ -10,57 +10,12 @@ use moxie_dom::{
     },
     prelude::*,
 };
+use moxie_streams::mox_stream;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen(start)]
 pub fn begin() {
     moxie_dom::boot(document().body(), root);
-}
-
-pub fn mox_stream<State: 'static, Msg: 'static + Clone, OutStream>(
-    initial_state: State,
-    reducer: impl Fn(&State, Msg) -> State + 'static,
-    operator: impl FnOnce(mpsc::UnboundedReceiver<Msg>) -> OutStream,
-) -> (Commit<State>, impl Fn(Msg))
-where
-    OutStream: Stream<Item = Msg> + 'static,
-{
-    let (current_state, accessor) = state(|| initial_state);
-
-    let dispatch = once(|| {
-        let (action_producer, action_consumer): (
-            mpsc::UnboundedSender<Msg>,
-            mpsc::UnboundedReceiver<Msg>,
-        ) = mpsc::unbounded();
-        let p = Arc::new(Mutex::new(action_producer));
-        let pc = p.clone();
-
-        let (mut operated_action_producer, operated_action_consumer): (
-            mpsc::UnboundedSender<Msg>,
-            mpsc::UnboundedReceiver<Msg>,
-        ) = mpsc::unbounded();
-
-        let _ = load_once(move || {
-            action_consumer.for_each(move |msg| {
-                accessor.update(|cur| Some(reducer(cur, msg.clone())));
-                let _ = operated_action_producer.start_send(msg);
-                ready(())
-            })
-        });
-
-        let _ = load_once(move || {
-            operator(operated_action_consumer).for_each(move |msg| {
-                let _ = pc.lock().unwrap().start_send(msg);
-                ready(())
-            })
-        });
-
-        move |msg| {
-            let _ = p.lock().unwrap().start_send(msg);
-        }
-    });
-
-    (current_state, dispatch)
 }
 
 #[derive(Clone)]

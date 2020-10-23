@@ -331,6 +331,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "moxie-streams"
+version = "0.1.0"
+source = "git+https://github.com/nicksenger/moxie-streams.git#6cf6b596545af00fa721186d51d8457a54c73730"
+dependencies = [
+ "futures",
+ "moxie",
+]
+
+[[package]]
 name = "once_cell"
 version = "1.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -534,6 +543,7 @@ dependencies = [
  "mox",
  "moxie",
  "moxie-dom",
+ "moxie-streams",
  "topo",
  "wasm-bindgen",
 ]
