@@ -61,7 +61,7 @@ An implementation of Adobe Spectrum components in WebAssembly using Moxie.
 - [ ] Tabs
 - [ ] Tags
 - [ ] Text Area
-- [ ] Text Field
+- [x] Text Input
 - [ ] Thumbnail
 - [ ] Toast
 - [ ] Tooltip
