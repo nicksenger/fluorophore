@@ -70,6 +70,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "fluorophore"
+version = "0.1.0"
+dependencies = [
+ "futures",
+ "mox",
+ "moxie",
+ "moxie-dom",
+ "moxie-streams",
+ "topo",
+ "wasm-bindgen",
+]
+
+[[package]]
 name = "futures"
 version = "0.3.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -533,19 +546,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "447f0de7474fbc4cd55f16adeece329bbe454c856e8d28550ded4856de57302a"
 dependencies = [
  "proc-macro2",
-]
-
-[[package]]
-name = "spectromox"
-version = "0.1.0"
-dependencies = [
- "futures",
- "mox",
- "moxie",
- "moxie-dom",
- "moxie-streams",
- "topo",
- "wasm-bindgen",
 ]
 
 [[package]]

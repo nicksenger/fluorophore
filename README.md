@@ -1,3 +1,3 @@
-# Spectromox
+# Fluorophore
 
 An implementation of Adobe Spectrum components in WebAssembly using Moxie.
